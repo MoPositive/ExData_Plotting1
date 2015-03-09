@@ -12,7 +12,24 @@ scp1$Date <- as.Date(scp1$Date,format="%d/%m/%Y")
 ts <- strptime(paste(scp1$Date,scp1$Time, sep=" "), format="%Y-%m-%d %H:%M:%S")
 
 #create our PNG graphics device
-png(filename = "Plot3.png",width = 480, height = 480, units = "px")
+png(filename = "Plot4.png",width = 480, height = 480, units = "px")
+
+## setup for a 2x2 set of plots
+par(mfrow = c(2,2))
+
+##Plot for global active power variable over time (days of week)
+plot(ts,
+     as.numeric(levels(scp1$"Global_active_power")[scp1$"Global_active_power"]),
+     type="l",
+     ylab="Global Active Power",
+     xlab="")
+
+##Plot for voltage over time
+plot(ts,
+     as.numeric(levels(scp1$Voltage)[scp1$Voltage]),
+     type="l",
+     ylab="Voltage",
+     xlab="datetime")
 
 ##Plot for sub_metering variables over time (days of week)
 plot(ts,
@@ -33,8 +50,15 @@ legend("topright",
                   "Sub_metering_2",
                   "Sub_metering_3"),
        lwd=c(2,2),
+       bty="n",
        col=c("black","red","blue"))
 
+## plot for global reactive power over time
+plot(ts,
+     as.numeric(levels(scp1$"Global_reactive_power")[scp1$"Global_reactive_power"]),
+     type="l",
+     ylab="Global_reactive_power",
+     xlab="datetime")
 
 ## Close the file
 dev.off()
